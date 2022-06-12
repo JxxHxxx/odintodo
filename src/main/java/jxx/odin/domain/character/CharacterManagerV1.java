@@ -18,32 +18,34 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CharacterManager {
+public class CharacterManagerV1 implements CharacterManager{
 
     private final MemberRepository memberRepository;
 
+    @Override
     public void create(Member member, Character character) {
         Member findMember = memberRepository.findByMember(member);
 
         findMember.getCharacters().add(character);
     }
 
+    @Override
     public List<Character> findAll(Member member) {
         Member findMember = memberRepository.findByMember(member);
 
         return findMember.getCharacters();
     }
 
+    @Override
     public Character findByIndex(Member member, Integer index) {
         Member findMember = memberRepository.findByMember(member);
 
         return findMember.getCharacters().get(index);
     }
-
+    
+    @Override
     public void delete(Member member, Character character){
         findAll(member).remove(character);
     }
-
-
 
 }
