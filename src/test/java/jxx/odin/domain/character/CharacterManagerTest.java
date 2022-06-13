@@ -21,7 +21,7 @@ class CharacterManagerTest {
     MemberRepository memberRepository;
 
     @Autowired
-    CharacterManager characterManager;
+    CharacterManagerV1 characterManager;
 
     @BeforeEach
     void beforeEach() {

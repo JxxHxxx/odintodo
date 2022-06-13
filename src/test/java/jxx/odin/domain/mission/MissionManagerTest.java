@@ -1,7 +1,7 @@
 package jxx.odin.domain.mission;
 
 import jxx.odin.domain.character.Character;
-import jxx.odin.domain.character.CharacterManager;
+import jxx.odin.domain.character.CharacterManagerV1;
 import jxx.odin.domain.member.Member;
 import jxx.odin.domain.member.MemberRepository;
 import org.assertj.core.api.Assertions;
@@ -21,7 +21,7 @@ class MissionManagerTest {
     MemberRepository memberRepository;
 
     @Autowired
-    CharacterManager characterManager;
+    CharacterManagerV1 characterManager;
 
     @Autowired
     MissionManager missionManager;

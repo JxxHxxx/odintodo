@@ -19,7 +19,6 @@ public enum Content {
     private final String name;
     private final Integer cycle;
 
-
     Content(String name, Integer cycle) {
         this.name = name;
         this.cycle = cycle;

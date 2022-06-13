@@ -10,8 +10,10 @@ import java.util.List;
 
 
 /**
- * CharacterManager
+ * CharacterManagerV2
  * 멤버의 캐릭터 조회, 삭제 가능
+ *
+ * CharacterManagerV2는 CharacterManagerV1과 달리 MemberRepository에 의존하지 않습니다.
  */
 
 @Slf4j
