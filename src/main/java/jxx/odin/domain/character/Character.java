@@ -16,6 +16,9 @@ public class Character {
 
     private List<Mission> missions;
 
+    public Character() {
+        this.missions = new ArrayList<>();
+    }
     public Character(String name) {
         this.name = name;
         this.missions = new ArrayList<>();

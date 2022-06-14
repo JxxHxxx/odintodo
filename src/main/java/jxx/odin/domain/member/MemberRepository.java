@@ -33,6 +33,11 @@ public class MemberRepository {
                 .filter(m -> m.equals(member))
                 .findFirst().get();
     }
+    public Member findByName(String name) {
+        return store.values().stream()
+                .filter(member -> member.getName().equals(name))
+                .findFirst().get();
+    }
     public List<Member> findAll() {
         return store.values().stream().toList();
     }
