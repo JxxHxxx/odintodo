@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .text-center {
+            text-align: center!important;
+        }
+        .form-signin-title {
+            text-align:left;
+        }
+        .white-space {
+            padding:10px;
+        }
+    </style>
+</head>
+<body class="text-center">
+<main class="form-signin">
+    <h3 class="form-signin-title">캐릭터 추가</h3>
+    <div class="login-box">
+        <form th:action th:object="${character}" method="post">
+            <div class="form-floating">
+                <label for="name">캐릭터 명</label>
+                <input class="form-control"
+                       type="text" th:field="*{name}" id="name">
+            </div>
+            <div class="white-space"></div>
+            <input class="w-100 btn btn-lg btn-primary"
+                   type="submit" value="캐릭터 추가">
+        </form>
+    </div>
+</main>
+</body>
+</html>
