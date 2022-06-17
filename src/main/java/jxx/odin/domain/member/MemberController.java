@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,29 +16,39 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class MemberController {
 
-    public static final String SESSION_MEMBER = "sessionMember";
+    public static final String SESSION_MEMBER_ID = "sessionMemberID";
     private final MemberRepository memberRepository;
 
     @GetMapping()
     public String home(Model model) {
-        model.addAttribute("member", new Member());
+        model.addAttribute("member", new LoginDto());
         return "/main/home";
     }
 
     @PostMapping()
-    public String loginV2(@ModelAttribute("member") Member member, Model model, HttpServletRequest request) {
+    public String loginV2(@ModelAttribute("member") LoginDto loginDto, Model model, HttpServletRequest request) {
         //로그인 임시 로직 - 추후 검증 추가 예정
-        Member loginMember = memberRepository.findByName(member.getName());
+        Member loginMember = memberRepository.findByName(loginDto.getName());
         if (loginMember == null) {
             return "redirect:/odin";
         }
 
-        if (loginMember.getPassword().equals(member.getPassword())) {
+        if (loginMember.getPassword().equals(loginDto.getPassword())) {
             log.info("유저 [{}] 로그인 검증이 완료되었습니다.", loginMember.getName());
         }
         model.addAttribute("loginMember", loginMember);
         HttpSession session = request.getSession();
-        session.setAttribute(SESSION_MEMBER, loginMember);
+        session.setAttribute(SESSION_MEMBER_ID, loginMember.getId());
+
+        //return "/main/loginHome";
+        return "redirect:/odin/characters";
+    }
+
+    @GetMapping("/characters")
+    public String characters(@SessionAttribute(SESSION_MEMBER_ID) Long memberId, Model model) {
+
+        Member loginMember = memberRepository.findById(memberId);
+        model.addAttribute("loginMember", loginMember);
 
         return "/main/loginHome";
     }

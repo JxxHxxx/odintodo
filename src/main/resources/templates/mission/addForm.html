@@ -42,22 +42,25 @@
 </head>
 <body class="text-center">
 <main class="form-signin">
-    <h3 class="form-signin-title">캐릭터 추가</h3>
+    <h3 class="form-signin-title">미션 추가</h3>
     <div class="login-box">
-        <form th:action th:object="${character}" method="post">
+        <form th:action th:object="${mission}" method="post">
             <div class="form-floating">
-                <label for="name">캐릭터 명</label>
-                <input class="form-control"
-                       type="text" th:field="*{name}" id="name">
+                <div>미션 목록</div>
+                <select th:field="*{content}" class="form-select">
+                    <option value="">==추가할 미션 선택==</option>
+                    <option th:each="content : ${contents}" th:value="${content}"
+                            th:text="${content.name}">공허의 유적</option>
+                </select>
             </div>
             <div class="white-space"></div>
 
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <button class="w-100 btn btn-lg btn-primary"
-                        type="button" th:onclick="|location.href='@{/odin/characters}'|">취소
+                        type="button" th:onclick="|location.href='@{/odin/character/{characterId}(characterId=${character.id})}'|">취소
                 </button>
                 <input class="w-100 btn btn-lg btn-primary"
-                       type="submit" value="캐릭터 추가">
+                       type="submit" value="미션 추가">
             </div>
         </form>
     </div>

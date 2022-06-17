@@ -31,6 +31,13 @@
         .white-space {
             padding:10px;
         }
+        .gap-2 {
+            gap: 2.5rem
+            rem
+            !important;
+            row-gap: 2.5rem !important;
+            column-gap: 0.5rem !important;
+        }
     </style>
 </head>
 <body class="text-center">
@@ -48,9 +55,17 @@
                        type="password" name="password" id="password">
                 <label for="password">비밀번호</label>
             </div>
+
             <div class="white-space"></div>
-            <input class="w-100 btn btn-lg btn-primary"
-                   type="submit" value="회원가입">
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button class="w-100 btn btn-lg btn-primary"
+                        type="button" th:onclick="|location.href='@{/odin}'|">취소
+                </button>
+                <input class="w-100 btn btn-lg btn-primary"
+                       type="submit" value="회원가입">
+            </div>
+
         </form>
     </div>
 </main>

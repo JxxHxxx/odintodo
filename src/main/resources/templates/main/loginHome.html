@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr th:each="character : ${loginMember.characters}">
-                <td th:text="${character.name}">캐릭터 명</td>
+                <td><a th:href="@{/odin/character/{characterId}(characterId=${character.id})}" th:text="${character.name}" 캐릭터 명</a></td>
             </tr>
             </tbody>
         </table>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 650px;
+            padding: 15px;
+            margin: auto;
+        }
+        .text-center {
+            text-align: center!important;
+        }
+        .form-signin-title {
+            text-align:left;
+        }
+        .white-space {
+            padding:10px;
+        }
+
+        .btn-group-1 {
+             text-align:right;
+        }
+        .px-4 {
+            padding-right: 3.5rem!important;
+            padding-left: 3.5rem!important;
+        }
+        .gap-2 {
+            gap: 2.5rem
+            rem
+            !important;
+            row-gap: 2.5rem !important;
+            column-gap: 0.5rem !important;
+        }
+    </style>
+    <script>
+        function manage(box) {
+            if(box.checked)
+                box.value = true;
+            else
+                box.value = false;
+        }
+
+
+    </script>
+</head>
+<body class="text-center">
+<main class="form-signin">
+    <h3 class="form-signin-title" th:text="${character.name}">캐릭터 이름</h3>
+    <div class="login-box">
+
+        <table class="table table-striped table-sm">
+            <tr>
+                <div th:each="mission : ${character.missions}">
+                    <th th:text="${mission.content.name}"></th>
+                </div>
+            </tr>
+
+            <tr>
+                <div th:each="mission : ${character.missions}">
+                    <th th:text="${mission.complete}"></th>
+                </div>
+            </tr>
+
+            <tr>
+                <form th:object="${character}" method="post">
+                    <th:block th:each=" missions, iter : ${character.missions}">
+                        <th><input type="checkbox"
+                                   th:field="*{missions[__${iter.index}__].complete}" onclick="manage(this)"></th>
+                    </th:block>
+                    <div class="white-space"></div>
+                    <div class="btn-group-1">
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                th:onclick="|location.href='@{/odin/character/{characterId}/edit(characterId=${character.id})}'|">
+                            미션 추가</button>
+                        <input class="btn btn-sm btn-outline-secondary"
+                               type="submit" value="미션 수정">
+                    </div>
+                </form>
+            </tr>
+        </table>
+        <div class="white-space"></div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" th:onclick="|location.href='@{/odin/characters}'|">캐릭터 목록</button>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

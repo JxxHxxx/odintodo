@@ -28,6 +28,13 @@
         .form-signin-title {
             text-align:left;
         }
+        .gap-2 {
+            gap: 2.5rem
+            rem
+            !important;
+            row-gap: 2.5rem !important;
+            column-gap: 0.5rem !important;
+        }
     </style>
 </head>
 <body class="text-center">
@@ -54,14 +61,13 @@
                     <p class="field-error" th:each="err : ${#fields.globalErrors()}"
                        th:text="${err}">글로벌 오류 메시지</p>
                 </div>-->
-
-                <div>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <button class="w-100 btn btn-lg btn-primary"
+                            type="button" th:onclick="|location.href='@{/odin/join}'|">회원가입
+                    </button>
                     <input class="w-100 btn btn-lg btn-primary"
                            type="submit" value="로그인">
-                    <input class="w-100 btn btn-lg btn-primary"
-                           type="button" th:onclick="|location.href='@{/odin/join}'|" value="회원가입">
                 </div>
-
             </form>
         </div>
     </main>
