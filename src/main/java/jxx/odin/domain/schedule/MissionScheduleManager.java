@@ -1,10 +1,8 @@
 package jxx.odin.domain.schedule;
 
-import jxx.odin.domain.character.CharacterManager;
-import jxx.odin.domain.member.Member;
-import jxx.odin.domain.member.MemberRepository;
+
 import jxx.odin.domain.mission.Mission;
-import jxx.odin.domain.mission.MissionManager;
+import jxx.odin.domain.mission.MissionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,9 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MissionScheduleManager {
 
-    private final MissionManager missionManager;
-    private final CharacterManager characterManager;
-    private final MemberRepository memberRepository;
+
+    private final MissionRepository missionRepository;
 
     /**
      * initMission
@@ -34,13 +31,16 @@ public class MissionScheduleManager {
      * ex) 일간 미션을 초기화하려면 DayConstant.DAY
      *     주간 미션을 초기화하려면 DayConstant.WEEKEND
      */
-    public void initMission(Integer cycle) {
-        List<Member> members = memberRepository.findAll();
 
-        members.forEach(member -> characterManager.findAll(member)
-                .forEach(character -> missionManager.findAll(character)
-                        .stream().filter(mission -> cycleOf(mission).equals(cycle))
-                        .forEach(mission -> mission.setComplete(false))));
+    // JPA
+    public void initMission(Integer cycle) {
+        List<Mission> missions = missionRepository.findAll();
+
+        missions.stream()
+                .filter(mission -> cycleOf(mission).equals(cycle))
+                .forEach(mission -> mission.setComplete(false));
+
+        missions.forEach(mission -> missionRepository.update(mission.getId(), mission));
     }
 
     private Integer cycleOf(Mission mission) {

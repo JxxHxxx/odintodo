@@ -33,20 +33,21 @@ public class SchedulingConfig implements SchedulingConfigurer {
     }
 
 
-    @Scheduled(cron = "0/5 * * * * *")
+    //@Scheduled(cron = "0/30 * * * * *")
     public void initTestScheduler() {
-        log.info("스케줄링 작업이 정상적으로 작동합니다. 현재 시간 [{}]", LocalTime.now());
+        log.info("스케줄링 작업을 테스트합니다. 현재 시간 [{}]", LocalTime.now());
+        missionScheduleManager.initMission(MissionCycle.DAILY);
     }
 
     @Scheduled(cron = "0 0 4 1/1 * *")
     public void initDailyMission() {
         log.info("일간 미션 초기화를 진행합니다.");
-        missionScheduleManager.initMission(MissionCycle.DAY);
+        missionScheduleManager.initMission(MissionCycle.DAILY);
     }
 
     @Scheduled(cron = "0 0 4 ? * MON")
     public void initWeeklyMission() {
         log.info("주간 미션 초기화를 진행합니다.");
-        missionScheduleManager.initMission(MissionCycle.WEEKEND);
+        missionScheduleManager.initMission(MissionCycle.WEEKLY);
     }
 }
