@@ -11,10 +11,10 @@ import lombok.Getter;
 @Getter
 public enum Content {
 
-    UNDERGROUND_PRISON("지하 감옥", MissionCycle.WEEKEND),
-    DWARF_SECRET_PASSAGE("난쟁이 비밀 통로", MissionCycle.DAY),
-    VOID_RUINS("공허의 유적", MissionCycle.DAY),
-    TREASURE_BOX("보물 상자", MissionCycle.ONLY_ONCE);
+    UNDERGROUND_PRISON("지하 감옥", MissionCycle.WEEKLY),
+    DWARF_SECRET_PASSAGE("난쟁이 비밀 통로", MissionCycle.DAILY),
+    VOID_RUINS("공허의 유적", MissionCycle.DAILY),
+    TREASURE_BOX("보물 상자", MissionCycle.ONE_TIME);
 
     private final String name;
     private final Integer cycle;

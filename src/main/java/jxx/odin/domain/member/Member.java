@@ -5,30 +5,28 @@ import jxx.odin.domain.character.Character;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jxx.odin.domain.member.MemberRepository.sequence;
-
-
-@Getter
-@Setter
+@Getter @Setter
+@Entity
 public class Member {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_ID")
     private Long id;
 
     private String name;
     private String password;
 
-    private List<Character> characters;
+    @OneToMany(mappedBy = "member")
+    private List<Character> characters = new ArrayList<>();
 
     public Member() {
-        this.characters = new ArrayList<>();
     }
 
     public Member(String name) {
-        this.id = sequence;
         this.name = name;
-        this.characters = new ArrayList<>();
     }
 }

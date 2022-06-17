@@ -1,24 +1,37 @@
 package jxx.odin.domain.mission;
 
+import jxx.odin.domain.character.Character;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import javax.persistence.*;
+
+
+@Getter @Setter
+@Entity
 public class Mission {
 
-    private Content content;
-    private Boolean complete;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MISSION_NAME")
+    private Long id;
 
-    //테스토 용도 생성자
-    public Mission(Content content, Boolean complete) {
-        this.content = content;
-        this.complete = complete;
+    @Enumerated(EnumType.STRING)
+    private Content content;
+    private Boolean complete = false;
+
+    @ManyToOne
+    @JoinColumn(name = "CHARACTER_ID")
+    private Character character;
+
+    public Mission() {
     }
 
     public Mission(Content content) {
         this.content = content;
-        this.complete = false;
+    }
 
+    public void setCharacter(Character character) {
+        this.character = character;
+        character.getMissions().add(this);
     }
 }

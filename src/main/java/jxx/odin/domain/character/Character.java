@@ -1,27 +1,36 @@
 package jxx.odin.domain.character;
 
-import jxx.odin.domain.mission.Content;
+import jxx.odin.domain.member.Member;
 import jxx.odin.domain.mission.Mission;
+import jxx.odin.domain.mission.MissionDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
+@Entity
 public class Character {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CHARACTER_ID")
+    private Long id;
 
     private String name;
 
-    private List<Mission> missions;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    @OneToMany(mappedBy = "character")
+    private List<Mission> missions = new ArrayList<>();
 
     public Character() {
-        this.missions = new ArrayList<>();
     }
     public Character(String name) {
         this.name = name;
-        this.missions = new ArrayList<>();
     }
 
     public Integer missionsSize() {
@@ -31,4 +40,14 @@ public class Character {
     public Mission findMission(Integer index) {
         return this.missions.get(index);
     }
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getCharacters().add(this);
+    }
+
+    /*public void setMissionComplete(List<Mission> missions) {
+        this.missions = missions;
+    }*/
+
 }
