@@ -49,23 +49,23 @@ public class CharacterController {
     }
 
     @GetMapping("/{characterId}")
-    public String missions(@PathVariable(name = "characterId") Long id, Model model)  {
+    public String viewMissions(@PathVariable(name = "characterId") Long id, Model model)  {
 
         Character character = characterRepository.findById(id);
 
         model.addAttribute("character", character);
 
+        character.getMissions()
+                .forEach(mission -> log.info("미션 수행 여부 [{}] [{}]",mission.getContent(), mission.getComplete()));
         return "/character/character";
     }
 
     @PostMapping("/{characterId}")
-    public String editMissions(@PathVariable(name = "characterId") Long id, @ModelAttribute("character") Character character) {
+    public String editMissions(@PathVariable(name = "characterId") Long id, @ModelAttribute("character") CharacterDto characterDto) {
 
-        characterRepository.updateCharacterMission(id, character);
+        characterRepository.updateCharacterMission(id, characterDto);
 
         log.info("캐릭터의 미션 완료 여부를 수정합니다.");
-        character.getMissions()
-                .forEach(mission -> log.info("미션 수행 여부 [{}] [{}]", mission.getContent(), mission.getComplete()));
 
         return "redirect:/odin/character/{characterId}";
     }

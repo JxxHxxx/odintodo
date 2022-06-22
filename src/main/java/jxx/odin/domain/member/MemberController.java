@@ -26,7 +26,7 @@ public class MemberController {
     }
 
     @PostMapping()
-    public String loginV2(@ModelAttribute("member") LoginDto loginDto, Model model, HttpServletRequest request) {
+    public String postLoginForm(@ModelAttribute("member") LoginDto loginDto, Model model, HttpServletRequest request) {
         //로그인 임시 로직 - 추후 검증 추가 예정
         Member loginMember = memberRepository.findByName(loginDto.getName());
         if (loginMember == null) {
@@ -45,7 +45,7 @@ public class MemberController {
     }
 
     @GetMapping("/characters")
-    public String characters(@SessionAttribute(SESSION_MEMBER_ID) Long memberId, Model model) {
+    public String viewCharacters(@SessionAttribute(SESSION_MEMBER_ID) Long memberId, Model model) {
 
         Member loginMember = memberRepository.findById(memberId);
         model.addAttribute("loginMember", loginMember);
@@ -69,13 +69,13 @@ public class MemberController {
     }
 
     @GetMapping("/join")
-    public String join(Model model) {
+    public String viewMemberForm(Model model) {
         model.addAttribute("member", new Member());
         return "/main/joinForm";
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute("member") Member member) {
+    public String addMember(@ModelAttribute("member") Member member) {
         memberRepository.save(member);
         log.info("유저 [{}]의 회원 가입이 완료되었습니다.", member.getName());
         return "redirect:/odin";

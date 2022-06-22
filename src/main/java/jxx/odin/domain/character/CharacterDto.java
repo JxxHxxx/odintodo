@@ -14,7 +14,5 @@ public class CharacterDto {
 
     private List<MissionDto> missions = new ArrayList<>();
 
-    public void setMissionsDto(List<MissionDto> missions) {
-        this.missions = missions;
-    }
+
 }
