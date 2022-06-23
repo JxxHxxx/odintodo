@@ -39,8 +39,6 @@ public class MemberController {
         model.addAttribute("loginMember", loginMember);
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_MEMBER_ID, loginMember.getId());
-
-        //return "/main/loginHome";
         return "redirect:/odin/characters";
     }
 

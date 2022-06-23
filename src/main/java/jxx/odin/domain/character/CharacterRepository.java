@@ -31,6 +31,7 @@ public class CharacterRepository {
 
         findCharacter.setMissions(character.getMissions());
         findCharacter.setName(character.getName());
+        findCharacter.setMember(character.getMember());
     }
 
     public void updateCharacterMission(Long characterId, CharacterDto character) {

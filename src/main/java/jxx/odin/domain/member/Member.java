@@ -1,6 +1,5 @@
 package jxx.odin.domain.member;
 
-
 import jxx.odin.domain.character.Character;
 import lombok.Getter;
 import lombok.Setter;

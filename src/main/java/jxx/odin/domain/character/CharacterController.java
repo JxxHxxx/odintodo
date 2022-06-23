@@ -33,15 +33,13 @@ public class CharacterController {
     }
 
     @PostMapping()
-    public String addCharacter(@SessionAttribute(SESSION_MEMBER_ID) Member sessionMember,
+    public String addCharacter(@SessionAttribute(SESSION_MEMBER_ID) Long memberId,
             @ModelAttribute("character") Character character, Model model) {
 
-        Member member = memberRepository.findById(sessionMember.getId());
+        Member member = memberRepository.findById(memberId);
+        character.setMember(member);
 
-        Character saveCharacter = characterRepository.save(character);
-        saveCharacter.setMember(member);
-
-        characterRepository.update(saveCharacter.getId(), saveCharacter);
+        characterRepository.save(character);
 
         model.addAttribute("loginMember", member);
 
