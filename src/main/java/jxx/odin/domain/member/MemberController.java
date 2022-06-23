@@ -20,9 +20,17 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @GetMapping()
-    public String home(Model model) {
-        model.addAttribute("member", new LoginDto());
-        return "/main/home";
+    public String home(@SessionAttribute(name = SESSION_MEMBER_ID, required = false) Long memberId, Model model) {
+
+        if (memberId == null) {
+            model.addAttribute("member", new LoginDto());
+            return "/main/home";
+        }
+
+        Member loginMember = memberRepository.findById(memberId);
+        model.addAttribute("loginMember", loginMember);
+        return "/main/loginHome";
+
     }
 
     @PostMapping()
@@ -37,9 +45,18 @@ public class MemberController {
             log.info("유저 [{}] 로그인 검증이 완료되었습니다.", loginMember.getName());
         }
         model.addAttribute("loginMember", loginMember);
+
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_MEMBER_ID, loginMember.getId());
         return "redirect:/odin/characters";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        return "redirect:/odin";
     }
 
     @GetMapping("/characters")
