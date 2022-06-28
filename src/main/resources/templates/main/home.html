@@ -44,18 +44,23 @@
             <form th:action th:object="${member}" method="post">
                 <div class="form-floating">
                     <input class="form-control"
-                           type="text" th:field="*{name}" id="name">
-                    <label for="name">계정명</label>
+                           type="text" th:field="*{email}" id="email">
+                    <label for="email">계정명</label>
+                    <div class="field-error" th:if="${errors?.containsKey('email')}"><p th:text="${errors['email']}"></p></div>
                 </div>
+
                 <div class="form-floating">
                     <input class="form-control"
                            type="password" th:field="*{password}" id="password">
                     <label for="password">비밀번호</label>
+                    <div class="field-error" th:if="${errors?.containsKey('password')}"><p th:text="${errors['password']}"></p></div>
                 </div>
+
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
+                    <div class="global-error" th:if="${errors?.containsKey('global')}"><p th:text="${errors['global']}"></p></div>
                 </div>
                 <!--<div th:if="${#fields.hasGlobalErrors()}">
                     <p class="field-error" th:each="err : ${#fields.globalErrors()}"

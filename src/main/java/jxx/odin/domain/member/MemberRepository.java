@@ -34,6 +34,14 @@ public class MemberRepository {
         return query.getSingleResult();
     }
 
+    public Member findByEmail(String memberEmail) {
+        String jpql = "select m from Member m where email = ?1";
+        TypedQuery<Member> query = entityManager.createQuery(jpql, Member.class);
+        query.setParameter(1, memberEmail);
+
+        return query.getSingleResult();
+    }
+
     public List<Member> findAll() {
         String jpql = "select m from Member m";
         TypedQuery<Member> query = entityManager.createQuery(jpql, Member.class);
@@ -44,7 +52,7 @@ public class MemberRepository {
         Member findMember = findById(memberId);
 
         findMember.setPassword(member.getPassword());
-        findMember.setName(member.getName());
+        findMember.setNickname(member.getNickname());
         findMember.setCharacters(member.getCharacters());
     }
 }

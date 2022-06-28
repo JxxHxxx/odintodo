@@ -9,7 +9,7 @@
 
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2 th:text="${loginMember.name} + '님 안녕하세요'">사용자 목록</h2>
+        <h2 th:text="${loginMember.nickname} + '님 안녕하세요'">사용자 목록</h2>
     </div>
 
     <hr class="my-4">
@@ -27,7 +27,7 @@
             </thead>
             <tbody>
             <tr th:each="character : ${loginMember.characters}">
-                <td><a th:href="@{/odin/character/{characterId}(characterId=${character.id})}" th:text="${character.name}" 캐릭터 명</a></td>
+                <td><a th:href="@{/odin/character/{characterId}(characterId=${character.id})}" th:text="${character.name}" 캐릭터 명></a></td>
             </tr>
             </tbody>
         </table>
