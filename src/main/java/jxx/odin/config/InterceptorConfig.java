@@ -16,6 +16,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/odin","/odin/join");
+                .excludePathPatterns("/odin","/odin/join","/error");
     }
+
 }

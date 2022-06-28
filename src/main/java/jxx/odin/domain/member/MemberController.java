@@ -5,16 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -40,39 +37,23 @@ public class MemberController {
     }
 
     @PostMapping()
-    public String login(@ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
-
-
-        if (!StringUtils.hasText(loginDto.getEmail())) {
-            bindingResult.addError(new FieldError("member","email","이메일은 필수입니다."));
-        }
-
-        if (!StringUtils.hasText(loginDto.getPassword())) {
-            bindingResult.addError(new FieldError("member","password","비밀번호는 필수입니다."));
-        }
-
-        if (bindingResult.hasErrors()) {
-            log.info("error = {}", bindingResult);
-            return "main/home";
-        }
+    public String login(@Validated @ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
 
         Member loginMember = memberRepository.findByEmail(loginDto.getEmail());
 
-        if (loginMember != null) {
-            if (!loginMember.getPassword().equals(loginDto.getPassword())) {
-                bindingResult.addError(new ObjectError("member","이메일/패스워드를 잘못 입력하셨습니다."));
-            }
-        }
-
-        if (bindingResult.hasErrors()) {
-            log.info("error = {}", bindingResult);
+        if (loginMember == null) {
+            bindingResult.addError(new ObjectError("member", "아이디/패스워드를 잘못 입력하셨습니다."));
             return "main/home";
         }
 
-        /*if (loginMember == null) {
-            return "redirect:/odin";
-        }*/
+        if (loginMember.isNotMatched(loginDto.getPassword())) {
+            bindingResult.addError(new ObjectError("member", "아이디/패스워드를 잘못 입력하셨습니다."));
+        }
 
+        if (bindingResult.hasErrors()) {
+            log.info("error = [{}]", bindingResult);
+            return "main/home";
+        }
 
         log.info("유저 [{}] 로그인 검증이 완료되었습니다.", loginMember.getNickname());
         model.addAttribute("loginMember", loginMember);
@@ -96,21 +77,6 @@ public class MemberController {
         Member loginMember = memberRepository.findById(memberId);
         model.addAttribute("loginMember", loginMember);
 
-        return "/main/loginHome";
-    }
-
-    //@PostMapping()
-    public String login(@ModelAttribute("member") Member member, Model model) {
-        //로그인 임시 로직 - 추후 검증 추가 예정
-        Member loginMember = memberRepository.findByName(member.getNickname());
-        if (loginMember == null) {
-            return "redirect:/odin";
-        }
-
-        if (loginMember.getPassword().equals(member.getPassword())) {
-            log.info("유저 [{}] 로그인 검증이 완료되었습니다.", loginMember.getNickname());
-            model.addAttribute("loginMember", loginMember);
-        }
         return "/main/loginHome";
     }
 
