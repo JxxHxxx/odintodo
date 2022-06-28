@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,22 +40,19 @@ public class MemberController {
     }
 
     @PostMapping()
-    public String login(@ModelAttribute("member") LoginDto loginDto, Model model, HttpServletRequest request) {
-        //로그인 임시 로직 - 추후 검증 추가 예정
-        log.info("로그인 검증 처리를 시작합니다.");
-        Map<String, String> errors = new HashMap<>();
+    public String login(@ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
+
 
         if (!StringUtils.hasText(loginDto.getEmail())) {
-            errors.put("email", "이메일은 필수입니다.");
+            bindingResult.addError(new FieldError("member","email","이메일은 필수입니다."));
         }
 
         if (!StringUtils.hasText(loginDto.getPassword())) {
-            errors.put("password", "비밀번호는 필수입니다.");
+            bindingResult.addError(new FieldError("member","password","비밀번호는 필수입니다."));
         }
 
-        if (!errors.isEmpty()) {
-            log.info("error = {}", errors);
-            model.addAttribute("errors",errors);
+        if (bindingResult.hasErrors()) {
+            log.info("error = {}", bindingResult);
             return "main/home";
         }
 
@@ -60,13 +60,12 @@ public class MemberController {
 
         if (loginMember != null) {
             if (!loginMember.getPassword().equals(loginDto.getPassword())) {
-                errors.put("global", "이메일/패스워드가 일치하지 않습니다.");
+                bindingResult.addError(new ObjectError("member","이메일/패스워드를 잘못 입력하셨습니다."));
             }
         }
 
-        if (!errors.isEmpty()) {
-            log.info("error = {}", errors);
-            model.addAttribute("errors",errors);
+        if (bindingResult.hasErrors()) {
+            log.info("error = {}", bindingResult);
             return "main/home";
         }
 
