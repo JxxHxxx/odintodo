@@ -46,6 +46,10 @@ public class Character {
         member.getCharacters().add(this);
     }
 
+    public boolean isMemberOf(Long memberId) {
+        return this.getMember().getId().equals(memberId);
+    }
+
     /*public void setMissionComplete(List<Mission> missions) {
         this.missions = missions;
     }*/

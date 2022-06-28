@@ -47,9 +47,14 @@ public class CharacterController {
     }
 
     @GetMapping("/{characterId}")
-    public String viewMissions(@PathVariable(name = "characterId") Long id, Model model)  {
+    public String viewMissions(@SessionAttribute(SESSION_MEMBER_ID) Long memberId, @PathVariable(name = "characterId") Long characterId, Model model)  {
 
-        Character character = characterRepository.findById(id);
+        Character character = characterRepository.findById(characterId);
+
+        if (!character.isMemberOf(memberId)) {
+            log.info("잘못된 접근입니다.");
+            return "redirect:/odin/characters";
+        }
 
         model.addAttribute("character", character);
 
