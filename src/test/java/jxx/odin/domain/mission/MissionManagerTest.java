@@ -60,15 +60,6 @@ class MissionManagerTest {
     @Test
     void find() {
 
-
     }
 
-    @DisplayName("미션 매니저로 캐릭터의 미션을 삭제할 수 있습니다.")
-    @Test
-    void delete() {
-        // 캐릭터 조회
-
-
-
-    }
 }

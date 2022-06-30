@@ -1,6 +1,5 @@
 package jxx.odin;
 
-import jxx.odin.config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

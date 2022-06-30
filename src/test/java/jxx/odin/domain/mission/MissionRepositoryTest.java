@@ -2,19 +2,14 @@ package jxx.odin.domain.mission;
 
 import jxx.odin.domain.character.Character;
 import jxx.odin.domain.character.CharacterRepository;
-import jxx.odin.domain.member.Member;
-import jxx.odin.domain.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class MissionRepositoryTest {
