@@ -36,6 +36,7 @@ public class MemberController {
 
     }
 
+
     @PostMapping()
     public String login(@Validated @ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
 
@@ -82,11 +83,25 @@ public class MemberController {
 
     @GetMapping("/join")
     public String join(Model model) {
-        model.addAttribute("member", new LoginFormDto());
+        model.addAttribute("joinForm", new JoinForm());
         return "/main/joinForm";
     }
 
     @PostMapping("/join")
+    public String joinV2(@Validated @ModelAttribute("joinForm") JoinForm joinForm, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("회원 가입 시 잘못된 결과가 존재해서 되돌려 보낸다.");
+            return "/main/joinForm";
+        }
+
+        Member joinMember = new Member(joinForm.getEmail(), joinForm.getNickname(), joinForm.getPassword());
+        memberRepository.save(joinMember);
+        log.info("닉네임 명 [{}]의 회원 가입이 완료되었습니다.", joinMember.getNickname());
+        return "redirect:/odin";
+    }
+
+    //@PostMapping("/join")
     public String join(@ModelAttribute("member") Member member) {
         memberRepository.save(member);
         log.info("유저 [{}]의 회원 가입이 완료되었습니다.", member.getNickname());

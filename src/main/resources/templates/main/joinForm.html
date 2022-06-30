@@ -44,21 +44,24 @@
 <main class="form-signin">
     <h3 class="form-signin-title">odin To-Do</h3>
     <div class="login-box">
-        <form th:action method="post">
+        <form th:action method="post" th:object="${joinForm}">
             <div class="form-floating">
                 <input class="form-control"
-                       type="text" name="email" id="email">
+                       type="text" th:field="*{email}" id="email">
                 <label for="email">계정명</label>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect date</p>
             </div>
             <div class="form-floating">
                 <input class="form-control"
-                       type="password" name="password" id="password">
+                       type="password" th:field="*{password}" id="password">
                 <label for="password">비밀번호</label>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect date</p>
             </div>
             <div class="form-floating">
                 <input class="form-control"
-                       type="text" name="nickname" id="nickname">
+                       type="text" th:field="*{nickname}" id="nickname">
                 <label for="nickname">닉네임</label>
+                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Incorrect date</p>
             </div>
 
             <div class="white-space"></div>
